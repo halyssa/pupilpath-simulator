@@ -7,7 +7,7 @@ class Main {
     System.out.println("Grade to evaluate (course/category): ");
     String type = sc.nextLine();
     //omly accepts course or category as responses, reinforced using while loop otherwise
-    while(!type.equals("course") && !type.equals("caregory")){
+    while(!type.equals("course") && !type.equals("category")){
       System.out.println("Please choose either course or category");
       type = sc.nextLine();
     }
@@ -75,6 +75,15 @@ class Main {
   
     //break string into int assignments, string category 
   public static void category(double desGrade){
-    
+    Scanner sc = new Scanner(System.in);
+    System.out.println("current grade: ");
+    int curGrade = sc.nextInt();
+    System.out.println("number of current assignmets: ");
+    int current = sc.nextInt();
+    System.out.println("number of upcoming assignments: ");
+    int upcoming = sc.nextInt();
+    double needed = (double)(desGrade*(current+upcoming) - curGrade*current)/upcoming;
+    System.out.println("To reach a grade of " + desGrade + " you need an average of " + needed + " over your next " + upcoming + " assignments");
+    sc.close();
   }    
 }
