@@ -31,9 +31,9 @@ class Main {
     String[][] catWeight = new String[numCat][2];
     //loop to fill in category data 
     for (int i = 0; i < numCat; i++){
-      System.out.println("Enter category's grade, weight (ex. 98.3, 65) *N/A if category is empty* : ");
+      System.out.println("Enter category's grade, weight (ex. 98.3, 65) *NA if category is empty* : ");
       String gradeWeight = sc.nextLine();
-      //break string into double grade, double weight, boolean empty
+      //break string into double grade, double weight
       String[] arr = gradeWeight.split(", ", 2); 
       int col = 0;
       for (String s : arr){
@@ -45,7 +45,7 @@ class Main {
     int empty = 0;
     //loop to account for empty categories 
     for (int i = 0; i < numCat; i++){
-      if (catWeight[i][0].equals("N/A")){
+      if (catWeight[i][0].equals("NA")){
         empty++;
         weightSum += Integer.parseInt(catWeight[i][1]);
       }
@@ -54,26 +54,36 @@ class Main {
     if (empty != 0){
       double weightSplit = (double)weightSum/(numCat-empty);
       for (int i = 0; i < numCat; i++){
-        if (!catWeight[i][0].equals("N/A")){
+        if (!catWeight[i][0].equals("NA")){
           catWeight[i][1] = Double.parseDouble(catWeight[i][1]) + weightSplit + "";
+        }
       }
     }
+    System.out.println(Arrays.deepToString(catWeight));
+
+    
+    /*
+    System.out.println("# of upcoming assignments, category of assignments: ");
+    String upcomingCat = sc.nextLine();
+    //splits input into # of upcoming assignments + which category the assignments belong to 
+    String[] upCat = upcomingCat.split(", ", 2);
+    int upcoming = Integer.parseInt(upCat[0]);
+    String category = upCat[1];
+    */
+
+    
+    double curGrade = 0;
+    //calculates current avg based on rebalanced weight array catWeight
+    for (int i = 0; i < numCat; i++){
+      if (!catWeight[i][0].equals("NA")){
+        curGrade += Double.parseDouble(catWeight[i][0])*(Double.parseDouble(catWeight[i][1])/100);
       }
-    System.out.println(Arrays.deepToString(catWeight));
-    System.out.println(weightSum);
-    System.out.println(Arrays.deepToString(catWeight));
+    }
+    System.out.println("cur: "+ curGrade);
+    //System.out.println(weightSum);
+    //System.out.println(Arrays.deepToString(catWeight));
     sc.close();
   }
-
-
-
-
-/*
-      System.out.println("# of assignments are coming up, category of assignments: ");
-      String numAssign = sc.nextLine();
-*/
-  
-    //break string into int assignments, string category 
   public static void category(double desGrade){
     Scanner sc = new Scanner(System.in);
     System.out.println("current grade: ");
