@@ -1,1 +1,3 @@
 All data is intended to be from pupilpath. The purpose of this program is to find the grade you need on your next assignment(s) in order to have a desired grade that you input. The desired grade could be for either a course average or a specific category within a course. Feedback will be much appreciated. Happy calculating!!!
+
+Note: It is assumed that the weight of upcoming assignments are equal to past assignments (ex. all tests have weight 1) to be time-efficient. Incorporating weight of assignments will mandate the user to enter not just the weight of each assignment but also the grade which may be tiresome for some users. 
