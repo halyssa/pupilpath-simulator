@@ -6,8 +6,9 @@ class Main {
     Scanner sc = new Scanner(System.in);
     System.out.println("Grade to evaluate (course/category): ");
     String type = sc.nextLine();
-    //omly accepts course or category as responses, reinforced using while loop otherwise
+    type = type.toLowerCase();
     
+    //omly accepts course or category as responses, reinforced using while loop otherwise
     while(!type.equals("course") && !type.equals("category")){
       System.out.println("Please choose either course or category");
       type = sc.nextLine();
@@ -34,7 +35,8 @@ class Main {
     String[][] cats = new String[numCat][2];
     //loop to fill in category data 
     for (int i = 0; i < numCat; i++){
-      System.out.println("Enter category's grade, weight (ex. 98.3, 65) *NA if category is empty* : ");
+      int x = i+1;
+      System.out.println("Enter category " + x +" grade, weight (ex. 98.3, 65) *NA if category is empty* : ");
       String gradeWeight = sc.nextLine();
       //break string into double grade, double weight
       String[] arr = gradeWeight.split(", ", 2); 
@@ -45,20 +47,20 @@ class Main {
       }
     }
     
-    int weightSum = 0;
+    int emptySum = 0;
     int empty = 0;
     
     //loop to account for empty categories 
     for (int i = 0; i < numCat; i++){
       if (cats[i][0].equals("NA")){
         empty++;
-        weightSum += Integer.parseInt(cats[i][1]);
+        emptySum += Integer.parseInt(cats[i][1]);
       }
     }
     
     //if there are any empty categories, implement weight split + change non-empty category weights
     if (empty != 0){
-      double weightSplit = (double)weightSum/(numCat-empty);
+      double weightSplit = (double)emptySum/(numCat-empty);
       for (int i = 0; i < numCat; i++){
         if (!cats[i][0].equals("NA")){
           cats[i][1] = Double.parseDouble(cats[i][1]) + weightSplit + "";
