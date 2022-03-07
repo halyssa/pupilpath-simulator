@@ -28,7 +28,7 @@ class Main {
     System.out.println("Number of categories in course: ");
     int numCat = Integer.parseInt(sc.nextLine());
     //each array = diff category
-    String[][] catWeight = new String[numCat][2];
+    String[][] cats = new String[numCat][2];
     //loop to fill in category data 
     for (int i = 0; i < numCat; i++){
       System.out.println("Enter category's grade, weight (ex. 98.3, 65) *NA if category is empty* : ");
@@ -37,7 +37,7 @@ class Main {
       String[] arr = gradeWeight.split(", ", 2); 
       int col = 0;
       for (String s : arr){
-        catWeight[i][col] = s;
+        cats[i][col] = s;
         col++;
       }
       }
@@ -45,45 +45,52 @@ class Main {
     int empty = 0;
     //loop to account for empty categories 
     for (int i = 0; i < numCat; i++){
-      if (catWeight[i][0].equals("NA")){
+      if (cats[i][0].equals("NA")){
         empty++;
-        weightSum += Integer.parseInt(catWeight[i][1]);
+        weightSum += Integer.parseInt(cats[i][1]);
       }
     }
     //if there are any empty categories, implement weight split + change non-empty category weights
     if (empty != 0){
       double weightSplit = (double)weightSum/(numCat-empty);
       for (int i = 0; i < numCat; i++){
-        if (!catWeight[i][0].equals("NA")){
-          catWeight[i][1] = Double.parseDouble(catWeight[i][1]) + weightSplit + "";
+        if (!cats[i][0].equals("NA")){
+          cats[i][1] = Double.parseDouble(cats[i][1]) + weightSplit + "";
         }
       }
     }
-    System.out.println(Arrays.deepToString(catWeight));
-
-    
-    /*
-    System.out.println("# of upcoming assignments, category of assignments: ");
+    //System.out.println(Arrays.deepToString(catWeight));
+    System.out.println("# of upcoming assignments, # of category (w/ respect to the order of earlier input): ");
     String upcomingCat = sc.nextLine();
     //splits input into # of upcoming assignments + which category the assignments belong to 
     String[] upCat = upcomingCat.split(", ", 2);
     int upcoming = Integer.parseInt(upCat[0]);
-    String category = upCat[1];
-    */
-
-    
+    int category = Integer.parseInt(upCat[1]) - 1; //index of desired category in catWeight
+    System.out.println("# of current assignments in category: ");
+    int current = sc.nextInt();
+    double catAvg = Double.parseDouble(cats[category][0]); // current avg of inputted category 
+    double catWeight = Double.parseDouble(cats[category][1]); //weight of inputted category
+    System.out.println("catavg: " + catAvg);
     double curGrade = 0;
     //calculates current avg based on rebalanced weight array catWeight
     for (int i = 0; i < numCat; i++){
-      if (!catWeight[i][0].equals("NA")){
-        curGrade += Double.parseDouble(catWeight[i][0])*(Double.parseDouble(catWeight[i][1])/100);
-      }
+        if (!cats[i][0].equals("NA")){
+        curGrade += Double.parseDouble(cats[i][0])*(Double.parseDouble(cats[i][1])/100);
+        }
     }
     System.out.println("cur: "+ curGrade);
-    //System.out.println(weightSum);
-    //System.out.println(Arrays.deepToString(catWeight));
+    double gradeDiff = desGrade - curGrade; //difference in desired avg and current avg
+    System.out.println("gradediff: "+gradeDiff);
+    double neededCatAvg = gradeDiff*0.01*catWeight + catAvg; //needed avg of category to have desired avg
+  //neededCatAvg * (current + upcoming) = currentAvg*current + needed*upcoming;
+    //needed = ((neededCatAvg*(current+upcoming))/upcoming) - (currentAvg*current)/upcoming; 
+    System.out.println("neededCatAvg: "+neededCatAvg);
+    double needed = ((neededCatAvg*(current+upcoming))-(catAvg*current))/upcoming;
+    System.out.println("To reach a grade of " + desGrade + " you need an average of " + needed + " over the next " + upcoming + " assignment(s)");
     sc.close();
   }
+
+  
   public static void category(double desGrade){
     Scanner sc = new Scanner(System.in);
     System.out.println("current grade: ");
@@ -93,7 +100,7 @@ class Main {
     System.out.println("number of upcoming assignments: ");
     int upcoming = sc.nextInt();
     double needed = (double)(desGrade*(current+upcoming) - curGrade*current)/upcoming;
-    System.out.println("To reach a grade of " + desGrade + " you need an average of " + needed + " over your next " + upcoming + " assignments");
+    System.out.println("To reach a grade of " + desGrade + " you need an average of " + needed + " over the next " + upcoming + " assignment(s)");
     sc.close();
   }    
 }
