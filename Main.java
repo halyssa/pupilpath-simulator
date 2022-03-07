@@ -79,18 +79,15 @@ class Main {
         }
     }
     System.out.println("cur: "+ curGrade);
-    double gradeDiff = desGrade - curGrade; //difference in desired avg and current avg
+    double gradeDiff = desGrade - curGrade; 
     System.out.println("gradediff: "+gradeDiff);
-    double neededCatAvg = gradeDiff*0.01*catWeight + catAvg; //needed avg of category to have desired avg
-  //neededCatAvg * (current + upcoming) = currentAvg*current + needed*upcoming;
-    //needed = ((neededCatAvg*(current+upcoming))/upcoming) - (currentAvg*current)/upcoming; 
+    double neededCatAvg = gradeDiff*0.01*catWeight + catAvg; //needed category avg to have desired avg
     System.out.println("neededCatAvg: "+neededCatAvg);
     double needed = ((neededCatAvg*(current+upcoming))-(catAvg*current))/upcoming;
     System.out.println("To reach a grade of " + desGrade + " you need an average of " + needed + " over the next " + upcoming + " assignment(s)");
     sc.close();
   }
 
-  
   public static void category(double desGrade){
     Scanner sc = new Scanner(System.in);
     System.out.println("current grade: ");
